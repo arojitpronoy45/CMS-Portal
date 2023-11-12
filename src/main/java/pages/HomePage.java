@@ -1,11 +1,14 @@
 package pages;
 
+import org.bouncycastle.oer.its.ieee1609dot2.basetypes.PublicEncryptionKey;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-
+import static common.CommonActions.*;
 public class HomePage {
 	WebDriver driver;
 	
@@ -31,6 +34,15 @@ public class HomePage {
 	@FindBy (xpath = "//em[@id='cms-homepage-header-logo-unauth' and @class='cms-icon cms-sprite-loggedout ms-3']")
 	WebElement logo;
 	
+	@FindBy (className = "-newuser-reg")
+	WebElement wrongNewUserRegistrationElement;
+	
+	@FindBy(id = "cms-forgot-userid")
+	WebElement forgotUserId;
+	
+	// third way to write WebElement
+	By unlock = By.xpath("//a[text()='unlock']");
+	
 	
 	public void clickLoginButton() throws InterruptedException {
 		loginButton.click();
@@ -53,8 +65,41 @@ public class HomePage {
 			// TODO: handle exception
 		}
 	}
-	public void clickLogo() {
+	public void clickLogo() throws InterruptedException {
 		logo.click();
+		Thread.sleep(5000);
 	}
+	
+	public void inputTextInUserIdField () {
+		userIdElement.sendKeys("apronoy 2001");
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+	}
+	public void clickForgotUserId() {
+		clickElement(forgotUserId);
+	
+		
+	}
+	public void inputTextInUserIdAndPasswordFieldThenClickLoginButton() throws InterruptedException {
+		inputText(userIdElement, "Aropro2001");
+		inputText(password, "12344");
+		Thread.sleep(3000);
+		clickElement(loginButton);
+		Thread.sleep(3000);
+		
+		
+	}
+	
+	public void clickUnlock() throws InterruptedException {
+		Thread.sleep(5000);
+		driver.findElement(unlock).click(); 
+		Thread.sleep(5000);
+		}
 }
 
